@@ -12,7 +12,6 @@ import '../styles/App.css'
 function App() {
   const [reload, setReload] = React.useState<boolean>(false)
   const [clankyData, setClankyData] = React.useState<any>(null)
-  const [showDialog, setShowDialog] = React.useState<boolean>(false)
 
   React.useEffect(() => {
     fetch('/get_blogs')
@@ -59,7 +58,7 @@ function App() {
                 <Typography variant='body1' style={{wordWrap:'break-word', width:'100%'}}>{cl.content}</Typography>
                 <Button size='medium' variant='outlined' startIcon={<EditIcon/>} onClick={() => {
                   window.location.href = `${window.location.origin}/article/${cl._id}`}}>Upraviť</Button>
-                <Button size='medium' variant='outlined' startIcon={<DeleteIcon/>} onClick={() => {setShowDialog(true)}}>Vymazať</Button>  
+                <Button size='medium' variant='outlined' startIcon={<DeleteIcon/>} onClick={() => {del_blog(cl._id)}}>Vymazať</Button>  
               </Box>
             )
           })
