@@ -1,12 +1,19 @@
-import { FC } from "react"
+import { Dispatch, FC, SetStateAction } from "react"
 import ArticleList from "../components/ArticleList"
+import Login from "./Login"
+import { User } from "../App"
+import '../styles/Home.css'
 
+interface HomeProps {
+    user: User
+    setUser: Dispatch<SetStateAction<User>>
+}
 
-const Home: FC = (props) => {
+const Home: FC<HomeProps> = (props) => {
     return (
-        <>
-            <ArticleList/>
-        </>
+        <div className=''>
+            
+        </div>
     )
 }
 

@@ -6,6 +6,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import axios from 'axios';
 import { Dispatch, FC, SetStateAction, useEffect } from 'react';
 import { User } from '../App';
+import '../styles/Login.css'
 
 interface LoginProps {
     user: User
@@ -49,9 +50,9 @@ const Login: FC<LoginProps> = (props) => {
     }
 
     return (
-        <>
-            <h1>Prihlasenie</h1>
+        <div>
             <form onSubmit={handleSubmit(onSubmit)}>
+                <h1>Prihlasenie</h1>
                 <Stack spacing={2} direction='column' width={400}>
                     <TextField {...register('email')} label='Email' type='email'/>
                     <ErrorMessage errors={errors} name='email'/>
@@ -60,7 +61,8 @@ const Login: FC<LoginProps> = (props) => {
                 </Stack>
                 <Button disabled={isSubmitting} type='submit' variant='contained' color='primary'>Prihlasiť</Button>
             </form>
-        </>
+            <a className='register-link' href='/register'>Vytvoriť účet</a>
+        </div>
     )
 }
 

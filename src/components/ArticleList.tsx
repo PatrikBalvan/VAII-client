@@ -1,7 +1,8 @@
 import { FC, useEffect, useState } from 'react';
 import axios from 'axios'
-import { Button } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import Article, { ArticleType } from './Article';
+import '../styles/ArticleList.css'
 
 const ArticleList: FC = (props) => {
 
@@ -24,15 +25,16 @@ const ArticleList: FC = (props) => {
   },[currentPage])
 
   return (
-    <div>
+    <div className='article-list'>
         {
           articles.map((art) => (
             <Article key={art._id} article={art}/>
           ))
         }
-        <Button onClick={() => {console.log(articles)}}>Info</Button>
-        <Button onClick={() => {setCurrentPage(currentPage-1)}}>-</Button>
-        <Button onClick={() => {setCurrentPage(currentPage+1)}}>+</Button>
+        <Stack spacing={2} direction={'row'}>
+          <Button variant='contained' onClick={() => {setCurrentPage(currentPage-1)}}>Predošla strana</Button>
+          <Button variant='contained' onClick={() => {setCurrentPage(currentPage+1)}}>Ďalšia strana</Button>
+        </Stack>
     </div>
   )
 }

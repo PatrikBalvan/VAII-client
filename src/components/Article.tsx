@@ -15,26 +15,10 @@ export interface ArticleInterface {
 }
 
 const Article: FC<ArticleInterface> = (props) => {
-    const [author, setAuthor] = useState<User>(undefined)
-
-    useEffect(() => {
-        if(props.article.authorId) {
-            axios.get(`/users/${props.article.authorId}`)
-                .then((res) => {
-                    setAuthor(res.data)
-                })
-                .catch((err) => {
-                    console.error(err)
-                })
-        }
-        
-    }, [props.article.authorId])
-
     return (
         <div className='article'>
             <h2 className="article-title">{props.article.title}</h2>
             <p className="article-content">{props.article.body}</p>
-            <p className="article-author">Napisal: {author ? author.username : ''}</p>
         </div>
     )
 }
