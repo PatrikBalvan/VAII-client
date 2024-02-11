@@ -4,7 +4,7 @@ import Home from './sites/Home'
 import Register from './sites/Register'
 import Login from './sites/Login'
 import {useState } from 'react'
-import Profile from './sites/Profile'
+import UpdateProfile from './sites/UpdateProfile'
 
 interface _User {
   email: string,
@@ -26,6 +26,7 @@ function App() {
         <Route path='/' element={<Home user={user} setUser={setUser}/>}/>
         <Route path='/login' element={<Login user={user} setUser={setUser}/>}/>
         <Route path='/register' element={<Register user={user} setUser={setUser}/>}/>
+        <Route path='/updateProfile' element={<UpdateProfile user={user} setUser={setUser}/>}/>
       </Routes>
     </BrowserRouter>
   )

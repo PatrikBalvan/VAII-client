@@ -45,6 +45,10 @@
     color: white;
 }
 
+.nav-bar .nav-right-side Button {
+    margin-right: 10px;
+}
+
 @media only screen and (max-width: 800px) {
     .nav-bar .nav-left-side .nav-link-item {
         font-size: 1rem;

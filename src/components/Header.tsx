@@ -48,6 +48,7 @@ const Header: FC<HeaderProps> = (props) => {
           <>
             <h1 className='nav-logged-user'>Prihlaseny uživatel: {props.user.username}</h1>
             <Button onClick={logoutHandler} variant='contained' color='error'>Odhlasiť</Button>
+            <Button href='/updateProfile' variant='contained'>Nastavenia</Button>
           </>
         }
       </div>

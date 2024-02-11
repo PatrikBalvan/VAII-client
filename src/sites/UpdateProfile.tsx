@@ -7,17 +7,26 @@ import axios from 'axios';
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import { User } from '../App';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Navigate } from 'react-router-dom';
 
-interface LoginProps {
+interface ProfileProps {
     user: User
     setUser: Dispatch<SetStateAction<User>>
 }
 
-const Login: FC<LoginProps> = (props) => {
+const UpdateProfile: FC<ProfileProps> = (props) => {
+    useEffect(() => {
+        if(!props.user) {
+            window.location.href = window.location.origin
+        }
+    }, [props.user])
+
     const formSchema = z.object({
         email: z.string().email('Uveďte email v spravnom formate abc@abc.abc'),
-        password: z.string().min(1, 'Heslo nesmie byť prázdne!')
+        username: z.string()
+        .min(1,'Úživateľské meno nesmie byť prázdne!')
+        .min(5, 'Úživateľské meno musi mať aspoň 5 znakov!'),
+        newPassword: z.string()
+            .min(8, 'Heslo musi mať aspoň 8 znakov!').optional().or(z.literal(''))
     })
     
     type FormFields = z.infer<typeof formSchema>
@@ -28,18 +37,36 @@ const Login: FC<LoginProps> = (props) => {
         setError,
         formState: { errors, isSubmitting },
     } = useForm<FormFields>({
-        resolver: zodResolver(formSchema)
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            email: props.user?.email,
+            username: props.user?.username
+        }
     })
 
     const [showPassword, setShowpassword] = useState<boolean>(false)
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
-        axios.post('/auth/login', {
+
+        axios.patch(`/users/${props.user?._id}`, {
             email: data.email,
-            password: data.password,
+            username: data.username,
+            password: data.newPassword
+        }, {
+            headers: {
+                Authorization: `Bearer ${props.user?.token}`
+            }
         }).then((res) => {
-            localStorage.setItem('user', JSON.stringify(res.data))
-            props.setUser(res.data)
+            const newUser = JSON.parse(localStorage.getItem('user')!)
+            newUser.email = res.data.email
+            newUser.username = res.data.username
+            localStorage.setItem('user', JSON.stringify(newUser))
+            props.setUser({
+                email: newUser.email,
+                token: newUser.token,
+                username: newUser.username,
+                _id: newUser._id
+            })
             window.location.href = window.location.origin
         }).catch((err) => {
             console.error(err)
@@ -47,14 +74,10 @@ const Login: FC<LoginProps> = (props) => {
         })
     }
 
-    if(props.user) {
-        return <Navigate to='/' replace/>
-    }
-
     return (
         <div className='flex justify-center items-center mt-40'>
             <div className='w-96 p-6 shadow-lg bg-stone-100 rounded-3xl'>
-                <h1 className='text-3xl'>Prihlasenie</h1>
+                <h1 className='text-3xl'>Úprava udajov</h1>
                 <hr className='m-3'/>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className='m-3'>
@@ -62,7 +85,11 @@ const Login: FC<LoginProps> = (props) => {
                         {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
                     </div>
                     <div className='m-3'>
-                    <TextField {...register('password')} className='w-full' label='Password' type={showPassword ? 'text' : 'password'}
+                        <TextField {...register('username')} label='Username' className='w-full'/>
+                        {errors.username && <p className='text-red-500'>{errors.username.message}</p>}
+                    </div>
+                    <div className='m-3'>
+                    <TextField {...register('newPassword')} className='w-full' label='Password' type={showPassword ? 'text' : 'password'}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -76,18 +103,17 @@ const Login: FC<LoginProps> = (props) => {
                                 )
                             }}
                         />
-                        {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
+                        {errors.newPassword && <p className='text-red-500'>{errors.newPassword.message}</p>}
                     </div>
                     <div className='m-3'>
                        {errors.root && <p className='text-red-500'>{errors.root.message}</p>}
                     </div>
                     <hr className='m-3'/>
-                    <Button disabled={isSubmitting} type='submit' variant='contained' color='primary'>Prihlasiť</Button>
+                    <Button disabled={isSubmitting} type='submit' variant='contained' color='primary'>Odoslať</Button>
                 </form>
-                <a className='mt-5 text-blue-500' href='/register'>Nemate učet? Vytvoriť účet</a>
             </div>
         </div>
     )
 }
 
-export default Login
+export default UpdateProfile

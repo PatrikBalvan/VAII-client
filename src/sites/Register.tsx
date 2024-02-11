@@ -8,6 +8,7 @@ import { z } from 'zod'
 import { ErrorMessage } from '@hookform/error-message';
 import axios from 'axios';
 import { User } from '../App';
+import { Navigate } from 'react-router-dom';
 
 interface RegisterProps {
     user: User
@@ -15,12 +16,6 @@ interface RegisterProps {
 }
 
 const Register: FC<RegisterProps> = (props) => {
-    useEffect(() => {
-        if(props.user) {
-            window.location.href = window.location.origin
-        }
-    }, [props.user])
-
     const formSchema = z.object({
         email: z.string().email('Uveďte email v spravnom formate abc@abc.abc'),
         username: z.string()
@@ -54,7 +49,12 @@ const Register: FC<RegisterProps> = (props) => {
             window.location.href = window.location.origin
         }).catch((err) => {
             console.error(err)
+            setError('root', {message: err.response.data.message})
         })
+    }
+
+    if(props.user) {
+        return <Navigate to='/' replace/>
     }
 
     return (
