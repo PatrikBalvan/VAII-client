@@ -81,15 +81,15 @@ const UpdateProfile: FC<ProfileProps> = (props) => {
                 <hr className='m-3'/>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className='m-3'>
-                        <TextField {...register('email')} label='Email' type='email' className='w-full'/>
+                        <TextField {...register('email')} label='E-mail' type='email' className='w-full'/>
                         {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
                     </div>
                     <div className='m-3'>
-                        <TextField {...register('username')} label='Username' className='w-full'/>
+                        <TextField {...register('username')} label='Úživateľské meno' className='w-full'/>
                         {errors.username && <p className='text-red-500'>{errors.username.message}</p>}
                     </div>
                     <div className='m-3'>
-                    <TextField {...register('newPassword')} className='w-full' label='Password' type={showPassword ? 'text' : 'password'}
+                    <TextField {...register('newPassword')} className='w-full' label='Nové heslo' type={showPassword ? 'text' : 'password'}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
