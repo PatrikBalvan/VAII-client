@@ -1,7 +1,7 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import { User } from '../App';
 import axios from 'axios'
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { ArticleType } from '../components/Article';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import EditIcon from '@mui/icons-material/Edit';
@@ -167,7 +167,7 @@ const ArticleSite: FC<ArticleSiteProps> = (props) => {
     }
 
     const onDeleteHandler = async (id: string) => {
-        
+
         await axios.delete(`/comment/${id}`, {
             headers: {
                 Authorization: `Bearer ${props.user?.token}`
@@ -196,7 +196,7 @@ const ArticleSite: FC<ArticleSiteProps> = (props) => {
                 <p className=''>{article.body}</p>
                 <p className=''>Napisal {author} dňa {createdDate.toLocaleDateString()}</p>
             </div>
-            <div className='flex ml-28'>
+            <div className='flex ml-10 md:ml-28'>
                 <IconButton disabled={isLoading} onClick={likeHandler} sx={{color: existingLike ? 'dodgerblue' : ''}}>
                     <ThumbUpIcon></ThumbUpIcon>
                 </IconButton>
@@ -206,6 +206,7 @@ const ArticleSite: FC<ArticleSiteProps> = (props) => {
                     <EditIcon></EditIcon>
                 </IconButton>}
             </div>
+            <h1 className='comments-title'>Komentáre</h1>
             {
                 comments.map((item) => (
                     <div key={item._id} className='ml-5 md:ml-28 mr-5 md:mr-28 mt-5 p-4 shadow-lg bg-stone-100 rounded-3xl'>

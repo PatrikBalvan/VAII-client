@@ -1,6 +1,4 @@
-import { FC, useEffect, useState } from 'react';
-import { User } from '../App';
-import axios from 'axios'
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 export type ArticleType = {

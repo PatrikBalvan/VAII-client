@@ -1,11 +1,9 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react"
-import ArticleList from "../components/ArticleList"
-import Login from "./Login"
 import { User } from "../App"
-import '../styles/Home.css'
 import axios from 'axios'
-import { DataGrid, GridColDef, GridRowSelectionModel, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
 import { Button, TextField } from "@mui/material"
+import '../styles/Admin.css'
 
 interface AdminProps {
     user: User
@@ -121,27 +119,27 @@ const Admin: FC<AdminProps> = (props) => {
     return (
         <div className='container block'>
             <div className='md:flex'>
-                <div className='m-5 p-5'>
+                <div className='admin-textfield'>
                     <h4 className='font-bold'>Pridať admina</h4>
                     <div className="flex items-center">
                         <TextField
                             placeholder="E-mail"
                             onChange={(event) => {setAdminEmail(event.target.value)}}/>
-                        <Button onClick={adminAddHandler} variant='contained'>Odoslať</Button>
+                        <Button className='send-button' onClick={adminAddHandler} variant='contained'>Odoslať</Button>
                     </div>
                 </div>
-                <div className='m-5 p-5'>
+                <div className='admin-textfield'>
                     <h4 className='font-bold'>Pridať editora</h4>
                     <div className="flex items-center">
                         <TextField
                             placeholder="E-mail"
                             onChange={(event) => {setEditorEmail(event.target.value)}}/>
-                        <Button onClick={editorAddHandler} variant='contained'>Odoslať</Button>
+                        <Button className='send-button' onClick={editorAddHandler} variant='contained'>Odoslať</Button>
                     </div>
                 </div>
             </div>
             <div className='md:flex'>
-                <div className='mt-2' style={{ height: 300, width: 600 }}>
+                <div className='datagrid' style={{ height: 300, width: 600 }}>
                     <h1 className='font-bold'>Admini</h1>
                     <DataGrid
                         rows={adminRows}
@@ -157,7 +155,7 @@ const Admin: FC<AdminProps> = (props) => {
                             setSelectedAdmins(rows)
                         }}
                     />
-                    <Button variant='contained' color='error' onClick={adminHandler}>Odstraniť vybranych adminov</Button>
+                    <Button className='delete-button' variant='contained' color='error' onClick={adminHandler}>Odstraniť vybranych adminov</Button>
                 </div>
                 <div className='md:ml-20 ml-0 md:mt-2 mt-20' style={{ height: 300, width: 600 }}>
                     <h1 className='font-bold'>Editori</h1>
@@ -175,7 +173,7 @@ const Admin: FC<AdminProps> = (props) => {
                             setSelectedEditors(rows)
                         }}
                     />
-                    <Button variant='contained' color='error' onClick={editorHandler}>Odstraniť vybranych editorov</Button>
+                    <Button className='delete-button' variant='contained' color='error' onClick={editorHandler}>Odstraniť vybranych editorov</Button>
                 </div>
             </div>
         </div>

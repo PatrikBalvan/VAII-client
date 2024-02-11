@@ -1,8 +1,5 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react"
-import ArticleList from "../components/ArticleList"
-import Login from "./Login"
 import { User } from "../App"
-import '../styles/Home.css'
 import Article, { ArticleType } from "../components/Article"
 import axios from 'axios'
 import { Button, MenuItem, Select, Stack } from "@mui/material"

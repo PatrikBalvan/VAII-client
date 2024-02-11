@@ -5,3 +5,19 @@
 .comment-author {
     font-style: italic;
 }
+
+.comments-title {
+    margin-left: 120px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+@media only screen and (max-width: 768px) {
+    .comments-title {
+        margin-left: 40px
+    }
+
+    .like-button {
+        margin-left: 40px
+    }
+}
