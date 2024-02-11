@@ -65,7 +65,7 @@ const CreateArticle: FC<CreateArticleProps> = (props) => {
             }
         })
         .then((res) => {
-            console.log(res)
+            window.location.href = '/'
         })
         .catch((err) => {
             console.error(err)

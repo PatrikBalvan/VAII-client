@@ -72,7 +72,7 @@ const Header: FC<HeaderProps> = (props) => {
                 <Link className='nav-link-item' to='/myLikedArticles'>Moje likenute artikly</Link> 
               </>
             }
-            {isEditor &&
+            {(isEditor || isAdmin) &&
               <>
                 <Link className='nav-link-item' to='/createArticle'>Pridať novy artikel</Link> 
               </>
