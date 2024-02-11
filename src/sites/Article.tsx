@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import { ArticleType } from '../components/Article';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import EditIcon from '@mui/icons-material/Edit';
-import { Button, IconButton } from '@mui/material';
+import { Button, IconButton, TextField } from '@mui/material';
 
 interface ArticleSiteProps {
     user: User
@@ -21,6 +21,9 @@ const ArticleSite: FC<ArticleSiteProps> = (props) => {
     const [articleLikes, setArticleLikes] = useState(0)
     const [existingLike, setExistingLike] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [commentContent, setCommentContent] = useState('')
+    const [reloadComments, setReloadComments] = useState(false)
+    const [comments, setComments] = useState<any[]>([])
 
     useEffect(() => {
         axios.get(`/article/${articleId}`, {
@@ -95,6 +98,17 @@ const ArticleSite: FC<ArticleSiteProps> = (props) => {
             })
     }, [articleId, props.user, existingLike])
 
+    useEffect(() => {
+        axios.get(`/comments/${articleId}`)
+            .then((res) => {
+                setComments(res.data)
+            })
+            .catch((err) => {
+                console.error(err)
+            })
+        setReloadComments(false)
+    }, [reloadComments])
+
     const likeHandler = async () => {
         setIsLoading(true)
         if(!existingLike) {
@@ -133,6 +147,24 @@ const ArticleSite: FC<ArticleSiteProps> = (props) => {
         }
     }
 
+    const addCommentHandler = async () => {
+        axios.post('/comment', {
+            articleId: articleId,
+            userId: props.user?._id,
+            body: commentContent
+        }, {
+            headers: {
+                Authorization: `Bearer ${props.user?.token}`
+            }
+        })
+        .then((res) => {
+            setReloadComments(true)
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+    }
+
     if(!article) {
         return (
             <></>
@@ -158,6 +190,20 @@ const ArticleSite: FC<ArticleSiteProps> = (props) => {
                     <EditIcon></EditIcon>
                 </IconButton>}
             </div>
+            {
+                comments.map((item) => (
+                    <div key={item._id} className='ml-5 md:ml-28 mr-5 md:mr-28 mt-5 p-4 shadow-lg bg-stone-100 rounded-3xl'>
+                        <p className='comment-body'>{item.body}</p>
+                        <p className='comment-author'>Napisal {item.username} dňa {item.createdAt}</p>
+                    </div>
+                ))
+            }
+            {props.user && 
+            <div className='ml-5 md:ml-28 mr-5 md:mr-28 mt-5 p-4 shadow-lg bg-stone-100 rounded-3xl'>
+                <h4 className='mt-2'>Pridať komentar</h4>
+                <TextField fullWidth inputProps={{maxLength: 150}} value={commentContent} onChange={(event) => {setCommentContent(event.target.value)}}/>
+                <Button variant='contained' onClick={addCommentHandler}>Odoslať</Button>
+            </div>}
         </div>
     )
 }
