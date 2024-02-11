@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
-import '../styles/Article.css'
 import { User } from '../App';
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 export type ArticleType = {
     _id: string
@@ -16,9 +16,10 @@ export interface ArticleInterface {
 
 const Article: FC<ArticleInterface> = (props) => {
     return (
-        <div className='article'>
-            <h2 className="article-title">{props.article.title}</h2>
-            <p className="article-content">{props.article.body}</p>
+        <div className='m-8 p-4 shadow-lg bg-stone-100 rounded-3xl'>
+            <h2 className='text-2xl font-bold'>{props.article.title}</h2>
+            <p className=''>{props.article.body.slice(0, 500)}...</p>
+            <Link className='text-blue-500' to={`/blog/${props.article._id}`}>Prečítať viac...</Link>
         </div>
     )
 }

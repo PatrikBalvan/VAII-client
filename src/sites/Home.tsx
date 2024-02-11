@@ -11,8 +11,13 @@ interface HomeProps {
 
 const Home: FC<HomeProps> = (props) => {
     return (
-        <div className=''>
-            
+        <div className='container lg:flex'>
+            <div className='w-full lg:w-2/5'>
+                <ArticleList/> 
+            </div>
+            <div>
+                <p>a</p>
+            </div>
         </div>
     )
 }
