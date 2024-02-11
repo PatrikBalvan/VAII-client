@@ -6,6 +6,7 @@ import { ArticleType } from '../components/Article';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import EditIcon from '@mui/icons-material/Edit';
 import { Button, IconButton, TextField } from '@mui/material';
+import '../styles/Article.css'
 
 interface ArticleSiteProps {
     user: User
@@ -165,6 +166,21 @@ const ArticleSite: FC<ArticleSiteProps> = (props) => {
         })
     }
 
+    const onDeleteHandler = async (id: string) => {
+        
+        await axios.delete(`/comment/${id}`, {
+            headers: {
+                Authorization: `Bearer ${props.user?.token}`
+            }
+        })
+        .then((res) => {
+            setReloadComments(true)
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+    }
+
     if(!article) {
         return (
             <></>
@@ -195,6 +211,9 @@ const ArticleSite: FC<ArticleSiteProps> = (props) => {
                     <div key={item._id} className='ml-5 md:ml-28 mr-5 md:mr-28 mt-5 p-4 shadow-lg bg-stone-100 rounded-3xl'>
                         <p className='comment-body'>{item.body}</p>
                         <p className='comment-author'>Napisal {item.username} dňa {item.createdAt}</p>
+                        {isEditor && <Button variant='contained' color='error' onClick={() => {
+                            onDeleteHandler(item._id)
+                        }}>Zmazať</Button>}
                     </div>
                 ))
             }
