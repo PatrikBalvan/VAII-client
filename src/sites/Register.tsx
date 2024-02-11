@@ -22,9 +22,11 @@ const Register: FC<RegisterProps> = (props) => {
     }, [props.user])
 
     const formSchema = z.object({
-        email: z.string().email(),
-        username: z.string().min(1,'Required field').min(5, 'Atleast 5 chars'),
-        password: z.string().min(8)
+        email: z.string().email('Uveďte email v spravnom formate abc@abc.abc'),
+        username: z.string()
+            .min(1,'Úživateľské meno nesmie byť prázdne!')
+            .min(5, 'Úživateľské meno musi mať aspoň 5 znakov!'),
+        password: z.string().min(8, 'Heslo musi mať aspoň 8 znakov!')
     })
     
     type FormFields = z.infer<typeof formSchema>
@@ -56,33 +58,44 @@ const Register: FC<RegisterProps> = (props) => {
     }
 
     return (
-        <>
-            <h1>Registrácia</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Stack spacing={2} direction='column' width={400}>
-                    <TextField {...register('email')} label='Email' type='email'/>
-                    <ErrorMessage errors={errors} name='email'/>
-                    <TextField {...register('username')} label='Username'/>
-                    <ErrorMessage errors={errors} name='username'/>
-                    <TextField {...register('password')} label='Password' type={showPassword ? 'text' : 'password'}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <Tooltip title={showPassword ? 'Skryť heslo' : 'Zobraziť heslo'}>
-                                        <IconButton onClick={()=>{setShowpassword(!showPassword)}}>
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </Tooltip>
-                                    
-                                </InputAdornment>
-                            )
-                        }}
-                    />
-                    <ErrorMessage errors={errors} name='password'/>
-                </Stack>
-                <Button disabled={isSubmitting} type='submit' variant='contained' color='primary'>Registrovať</Button>
-            </form>
-        </>
+        <div className='flex justify-center items-center mt-40'>
+            <div className='w-96 p-6 shadow-lg bg-stone-100 rounded-3xl'>
+                <h1 className='text-3xl'>Registracia</h1>
+                <hr className='m-3'/>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className='m-3'>
+                        <TextField {...register('email')} label='Email' type='email' className='w-full'/>
+                        {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
+                    </div>
+                    <div className='m-3'>
+                        <TextField {...register('username')} label='Username' className='w-full'/>
+                        {errors.username && <p className='text-red-500'>{errors.username.message}</p>}
+                    </div>
+                    <div className='m-3'>
+                        <TextField {...register('password')} className='w-full' label='Password' type={showPassword ? 'text' : 'password'}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <Tooltip title={showPassword ? 'Skryť heslo' : 'Zobraziť heslo'}>
+                                            <IconButton onClick={()=>{setShowpassword(!showPassword)}}>
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </Tooltip>
+                                        
+                                    </InputAdornment>
+                                )
+                            }}
+                        />
+                        {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
+                    </div>
+                    <div className='m-3'>
+                       {errors.root && <p>{errors.root.message}</p>}
+                    </div>
+                    <hr className='m-3'/>
+                    <Button disabled={isSubmitting} type='submit' variant='contained' color='primary'>Registrovať</Button>
+                </form>
+            </div>
+        </div>
     )
 }
 

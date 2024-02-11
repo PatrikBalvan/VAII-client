@@ -1,7 +1,10 @@
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { User } from '../App';
 import { Link } from 'react-router-dom';
-import { ReorderFourOutline, CloseOutline } from "react-ionicons";
+import '../styles/Header.css'
+import Login from '../sites/Login';
+import { Button, IconButton } from '@mui/material';
+import ReorderIcon from '@mui/icons-material/Reorder';
 
 interface HeaderProps {
   setUser: Dispatch<SetStateAction<User>>
@@ -24,25 +27,29 @@ const Header: FC<HeaderProps> = (props) => {
 
   const navLinks = [
 		{ title: "Domov", path: "/" },
-    { title: "Registracia", path: "/register" },
 	];
 
   return (
-		<div className='flex justify-between items-center h-24 max-w-[80%] mx-auto px-4 bg-black text-white'>
-      <h1 className='w-full text-3xl font-bold'>Auto forum</h1>
-      <div className='hidden md:flex'>
-        {navLinks.map((item) => (
-          <Link className='p-4' to={item.path} key={item.title}>{item.title}</Link>
-        ))}
+		<div className='nav-bar'>
+      <div className='nav-left-side'>
+        <div className='nav-links' id={showNav ? 'hidden' : ''}>
+          {navLinks.map((item) => (
+            <Link className='nav-link-item' to={item.path} key={item.title}>{item.title}</Link>
+          ))}
+        </div>
+        <IconButton className='nav-expand-button' onClick={navHandler}>
+          <ReorderIcon/>
+        </IconButton>
       </div>
-      <div onClick={navHandler} className='block md:hidden'>
-          {showNav ? <CloseOutline color={'#ffffff'}/> : <ReorderFourOutline color={'#ffffff'}/>}
-      </div>
-      <div className={showNav ? 'fixed left-0 top-0 w-[60%] h-full border-r border-r-gray-900 bg-[#000300] ease-in-out duration-500' : 'ease-in-out duration-500 fixed left-[-100%]'}>
-        <h1 className='w-full text-3xl font-bold m-4'>Auto forum</h1>
-        {navLinks.map((item) => (
-          <Link className='p-4 border-b border-gray-600' to={item.path} key={item.title}>{item.title}</Link>
-        ))}
+      <div className='nav-right-side'>
+        {!props.user ?
+          <Link className='nav-login' to='/login'>Login</Link>
+          :
+          <>
+            <h1 className='nav-logged-user'>Prihlaseny uživatel: {props.user.username}</h1>
+            <Button onClick={logoutHandler} variant='contained' color='error'>Odhlasiť</Button>
+          </>
+        }
       </div>
     </div>
 	);

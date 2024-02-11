@@ -24,6 +24,7 @@ function App() {
       <Header setUser={setUser} user={user}/>
       <Routes>
         <Route path='/' element={<Home user={user} setUser={setUser}/>}/>
+        <Route path='/login' element={<Login user={user} setUser={setUser}/>}/>
         <Route path='/register' element={<Register user={user} setUser={setUser}/>}/>
       </Routes>
     </BrowserRouter>

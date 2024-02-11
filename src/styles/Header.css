@@ -1,0 +1,83 @@
+.nav-bar {
+    background-color: black;
+    width: 100%;
+    height: 4rem;
+    display: flex;
+}
+
+.nav-bar .nav-left-side {
+    flex: 50%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.nav-bar .nav-right-side {
+    flex: 50%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.nav-bar .nav-left-side .nav-link-item {
+    font-size: 1.3rem;
+    color: white;
+    margin-left: 15px
+}
+
+.nav-bar .nav-left-side #hidden {
+    display: flex;
+}
+
+.nav-bar .nav-left-side .nav-expand-button {
+    color: white;
+    display: none;
+}
+
+.nav-bar .nav-right-side .nav-login {
+    font-size: 1.3rem;
+    color: white;
+    margin-right: 15px
+}
+
+.nav-bar .nav-right-side .nav-logged-user {
+    margin-right: 10px;
+    color: white;
+}
+
+@media only screen and (max-width: 800px) {
+    .nav-bar .nav-left-side .nav-link-item {
+        font-size: 1rem;
+    }
+
+    .nav-bar .nav-right-side .nav-login {
+        font-size: 1rem;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .nav-bar .nav-left-side .nav-links {
+        display: none;
+    }
+
+    .nav-bar .nav-left-side .nav-expand-button {
+        display: flex;
+    }
+
+    .nav-bar .nav-left-side #hidden {
+        z-index: 5;
+        position: absolute;
+        left: 0px;
+        top: 4rem;
+        width: 100%;
+        background-color: black;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+    }
+
+    .nav-bar .nav-left-side #hidden Link {
+        margin: 20px;
+        font-size: 2rem;
+    }
+}
