@@ -26,7 +26,8 @@ const Header: FC<HeaderProps> = (props) => {
 
 
   const navLinks = [
-		{ title:'Domov', path: '/' },
+		{ title: 'Domov', path: '/' },
+    { title: 'Moje likenute artikly', path: '/myLikedArticles'}
 	];
 
   return (
