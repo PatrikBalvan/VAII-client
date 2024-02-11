@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import { User } from '../App';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Navigate } from 'react-router-dom';
 
 interface ProfileProps {
     user: User
@@ -14,12 +15,6 @@ interface ProfileProps {
 }
 
 const UpdateProfile: FC<ProfileProps> = (props) => {
-    useEffect(() => {
-        if(!props.user) {
-            window.location.href = window.location.origin
-        }
-    }, [props.user])
-
     const formSchema = z.object({
         email: z.string().email('Uveďte email v spravnom formate abc@abc.abc'),
         username: z.string()
@@ -74,6 +69,12 @@ const UpdateProfile: FC<ProfileProps> = (props) => {
             console.error(err)
             setError('root', {message: err.response.data.message})
         })
+    }
+
+    if(!props.user) {
+        return (
+            <Navigate to='/'/>
+        )
     }
 
     return (

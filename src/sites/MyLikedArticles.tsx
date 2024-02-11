@@ -6,6 +6,7 @@ import '../styles/Home.css'
 import Article, { ArticleType } from "../components/Article"
 import axios from 'axios'
 import { Button } from "@mui/material"
+import { Navigate } from "react-router-dom"
 
 interface MyLikedArticlesProps {
     user: User
@@ -37,8 +38,10 @@ const MyLikedArticles: FC<MyLikedArticlesProps> = (props) => {
         })
     },[currentPage])
 
-    if(articles.length === 0) {
-        return <></>
+    if(!props.user) {
+        return (
+            <Navigate to='/'/>
+        )
     }
 
     return (

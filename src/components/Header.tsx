@@ -18,25 +18,23 @@ const Header: FC<HeaderProps> = (props) => {
   const logoutHandler = () => {
     localStorage.removeItem('user')
     props.setUser(undefined) 
+    window.location.href = '/'
   }
 
   const navHandler = () => {
     setShowNav(!showNav);
   };
 
-
-  const navLinks = [
-		{ title: 'Domov', path: '/' },
-    { title: 'Moje likenute artikly', path: '/myLikedArticles'}
-	];
-
   return (
 		<div className='nav-bar'>
       <div className='nav-left-side'>
         <div className='nav-links' id={showNav ? 'hidden' : ''}>
-          {navLinks.map((item) => (
-            <Link className='nav-link-item' to={item.path} key={item.title}>{item.title}</Link>
-          ))}
+            <Link className='nav-link-item' to='/'>Domov</Link>
+            {props.user &&
+              <>
+                <Link className='nav-link-item' to='/myLikedArticles'>Moje likenute artikly</Link> 
+              </>
+            }
         </div>
         <IconButton className='nav-expand-button' onClick={navHandler}>
           <ReorderIcon/>
