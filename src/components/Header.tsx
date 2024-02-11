@@ -1,10 +1,11 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import { User } from '../App';
 import { Link } from 'react-router-dom';
 import '../styles/Header.css'
 import Login from '../sites/Login';
 import { Button, IconButton } from '@mui/material';
 import ReorderIcon from '@mui/icons-material/Reorder';
+import axios from 'axios'
 
 interface HeaderProps {
   setUser: Dispatch<SetStateAction<User>>
@@ -14,6 +15,42 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = (props) => {
 
   const [showNav, setShowNav] = useState(false)
+  const [isEditor, setIsEditor] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
+
+  useEffect(() => {
+    if(props.user) {
+      axios.get(`/users/isEditor/${props.user?._id}`, {
+        headers: {
+          Authorization: `Bearer ${props.user?.token}`
+        }
+      })
+      .then((res) => {
+        if(res.status === 200) {
+          setIsEditor(true)
+        }
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+    }
+
+    if(props.user) {
+      axios.get(`/users/isAdmin/${props.user?._id}`, {
+        headers: {
+          Authorization: `Bearer ${props.user?.token}`
+        }
+      })
+      .then((res) => {
+        if(res.status === 200) {
+          setIsAdmin(true)
+        }
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+    }
+  },[props.user])
 
   const logoutHandler = () => {
     localStorage.removeItem('user')
@@ -33,6 +70,16 @@ const Header: FC<HeaderProps> = (props) => {
             {props.user &&
               <>
                 <Link className='nav-link-item' to='/myLikedArticles'>Moje likenute artikly</Link> 
+              </>
+            }
+            {isEditor &&
+              <>
+                <Link className='nav-link-item' to='/createArticle'>Pridať novy artikel</Link> 
+              </>
+            }
+            {isAdmin &&
+              <>
+                <Link className='nav-link-item' to='/admin'>Admin</Link> 
               </>
             }
         </div>

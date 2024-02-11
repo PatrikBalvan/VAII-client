@@ -7,6 +7,8 @@ import {useState } from 'react'
 import UpdateProfile from './sites/UpdateProfile'
 import ArticleSite from './sites/Article'
 import MyLikedArticles from './sites/MyLikedArticles'
+import CreateArticle from './sites/CreateArticle'
+import Admin from './sites/Admin'
 
 interface _User {
   email: string,
@@ -31,6 +33,8 @@ function App() {
         <Route path='/updateProfile' element={<UpdateProfile user={user} setUser={setUser}/>}/>
         <Route path='/blog/:articleId' element={<ArticleSite user={user} setUser={setUser}/>}/>
         <Route path='/myLikedArticles' element={<MyLikedArticles user={user} setUser={setUser}/>}/>
+        <Route path='/createArticle' element={<CreateArticle user={user} setUser={setUser}/>}/>
+        <Route path='/admin' element={<Admin user={user} setUser={setUser}/>}/>
       </Routes>
     </BrowserRouter>
   )

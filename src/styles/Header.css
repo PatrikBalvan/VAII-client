@@ -49,7 +49,7 @@
     margin-right: 10px;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1000px) {
     .nav-bar .nav-left-side .nav-link-item {
         font-size: 1rem;
     }
@@ -59,7 +59,7 @@
     }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
     .nav-bar .nav-left-side .nav-links {
         display: none;
     }
