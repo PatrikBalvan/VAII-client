@@ -15,9 +15,6 @@ const Home: FC<HomeProps> = (props) => {
             <div className='w-full lg:w-2/5'>
                 <ArticleList/> 
             </div>
-            <div>
-                <p>a</p>
-            </div>
         </div>
     )
 }
