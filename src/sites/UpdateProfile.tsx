@@ -23,10 +23,12 @@ const UpdateProfile: FC<ProfileProps> = (props) => {
     const formSchema = z.object({
         email: z.string().email('Uveďte email v spravnom formate abc@abc.abc'),
         username: z.string()
-        .min(1,'Úživateľské meno nesmie byť prázdne!')
-        .min(5, 'Úživateľské meno musi mať aspoň 5 znakov!'),
+            .min(1,'Úživateľské meno nesmie byť prázdne!')
+            .min(5, 'Úživateľské meno musi mať aspoň 5 znakov!')
+            .max(10, 'Úživateľské meno musi mať najviac 10 znakov!'),
         newPassword: z.string()
-            .min(8, 'Heslo musi mať aspoň 8 znakov!').optional().or(z.literal(''))
+            .min(8, 'Heslo musi mať aspoň 8 znakov!')
+            .max(15, 'Heslo musi mať najviac 15 znakov!').optional().or(z.literal(''))
     })
     
     type FormFields = z.infer<typeof formSchema>

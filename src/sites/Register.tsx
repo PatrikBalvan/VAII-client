@@ -20,8 +20,11 @@ const Register: FC<RegisterProps> = (props) => {
         email: z.string().email('Uveďte email v spravnom formate abc@abc.abc'),
         username: z.string()
             .min(1,'Úživateľské meno nesmie byť prázdne!')
-            .min(5, 'Úživateľské meno musi mať aspoň 5 znakov!'),
-        password: z.string().min(8, 'Heslo musi mať aspoň 8 znakov!')
+            .min(5, 'Úživateľské meno musi mať aspoň 5 znakov!')
+            .max(10, 'Úživateľské meno musi mať najviac 10 znakov!'),
+        password: z.string()
+            .min(8, 'Heslo musi mať aspoň 8 znakov!')
+            .max(15, 'Heslo musi mať najviac 15 znakov!')
     })
     
     type FormFields = z.infer<typeof formSchema>

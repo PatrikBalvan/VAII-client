@@ -26,7 +26,7 @@ const Header: FC<HeaderProps> = (props) => {
 
 
   const navLinks = [
-		{ title: "Domov", path: "/" },
+		{ title:'Domov', path: '/' },
 	];
 
   return (
@@ -46,7 +46,7 @@ const Header: FC<HeaderProps> = (props) => {
           <Link className='nav-login' to='/login'>Login</Link>
           :
           <>
-            <h1 className='nav-logged-user'>Prihlaseny uživatel: {props.user.username}</h1>
+            <h1 className='nav-logged-user'>{props.user.username}</h1>
             <Button onClick={logoutHandler} variant='contained' color='error'>Odhlasiť</Button>
             <Button href='/updateProfile' variant='contained'>Nastavenia</Button>
           </>
